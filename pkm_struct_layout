@@ -1,0 +1,172 @@
+http://projectpokemon.org/wiki/Pokemon_Black/White_NDS_Structure
+http://projectpokemon.org/forums/showthread.php?11474-Hex-Values-and-Trashbytes-in-B-W
+Bytes(hex)    Meaning
+=======================================
+00-03         personality value
+                  affects Gender, Ability, Nature, Shininess, and
+                  more
+04-05         unused
+06-07         checksum (how to calculate?)
+== Block A ==
+(09<<8)+08    species (as natl pokedex ID)
+(0b<<8)+0a    helditem
+(0d<<8)+0c    OT id
+(0f<<8)+0e    OT secret id
+10-13         experience
+14            happiness / egg steps to hatch
+15            ability
+                  contstrained to Upper 16 of PID % 2
+16            markings (by hex value (AND to combine))
+                  01 - circle
+                  02 - triangle
+                  04 - square
+                  08 - heart
+                  10 - star
+                  20 - diamond
+17            original language (by hex value)
+                  01 - Japanese
+                  02 - English
+                  03 - French
+                  04 - Italian
+                  05 - German
+                  07 - Spanish
+                  08 - Korean
+18-1d         evs (hp/atk/def/speed/spatk/spdef - 1 byte each)
+1e-23         contest values (cool/beauty/cute/smart/tough/sheen - 1 byte each)
+24-25         sinnoh ribbon set 1
+26-27         sinnoh ribbon set 2
+== Block B ==
+28-2f         attacks
+30-33         current PP
+34-37         PP Ups (TODO: how is this formatted?)
+38-3b         ivs
+                  hp/atk/def/speed/spatk/spdef - 5 bits each
+                  bit 30 - isegg flag
+                  bit 31 - isnicknamed flag
+3c-3d         hoenn ribbon set 1
+3e-3f         hoenn ribbon set 2
+40            bit 0 - fateful encounter flag
+                          always set if relocated (obv.)
+              bit 1-2 - gender
+                  01 - genderless
+                  10 - female
+                  11 - male
+              bit 3-7 - alternate formes
+41            nature
+                  00 --- Hardy
+                  01 --- Lonely
+                  02 --- Brave
+                  03 --- Adamant
+                  04 --- Naughty
+                  05 --- Bold
+                  06 --- Docile
+                  07 --- Relaxed
+                  08 --- Impish
+                  09 --- Lax
+                  0A --- Timid
+                  0B --- Hasty
+                  0C --- Serious
+                  0D --- Jolly
+                  0E --- Naive
+                  0F --- Modest
+                  10 --- Mild
+                  11 --- Quiet
+                  12 --- Bashful
+                  13 --- Rash
+                  14 --- Calm
+                  15 --- Gentle
+                  16 --- Sassy
+                  17 --- Careful
+                  18 --- Quirky
+42            hasdreamworldability (top 7 bits unused)
+                  TODO: what is the main ability flag set to when
+                  this is set?
+43-47         unused (all zeroes)
+== Block C ==
+48-5d         Nickname (TODO: format)
+5e            unused
+5f            hometown (game in which was caught?)
+60-61         sinnoh ribbon set 3
+62-63         sinnoh ribbon set 4
+64-67         unused
+== Block D ==
+68-77         OT name (TODO: format)
+78-7A         date egg recv
+7b-7d         date met
+7e-7f         egg location (TODO: finish)
+                  preserved when poketransferred
+80-81         met at location
+                  00 00 when caught in BW
+                  31 75 when poketransferred
+                  75 3a for relocated celebi
+                  75 3c for relocated entei/raikou/suicune
+82            pokerus
+                  00 - Unexposed
+                  10 - Cured (DPPtHGSS)
+                  11 - Infected (DPPtHGSS)
+                  60 - Cured (BW)
+                  62 - Infected, no pokemon in party to spread to. (BW)
+                  63 - Infected, 1+ pokemon in party to spread to. (BW)
+83            pokeball
+                  00 - Poke Ball (Default)
+                  01 - Master Ball
+                  02 - Ultra Ball
+                  03 - Great Ball
+                  04 - Poke Ball
+                  05 - Safari Ball
+                  06 - Net Ball
+                  07 - Dive Ball
+                  08 - Nest Ball
+                  09 - Repeat Ball
+                  0A - Timer Ball
+                  0B - Luxury Ball
+                  0C - Premier Ball
+                  0D - Dusk Ball
+                  0E - Heal Ball
+                  0F - Quick Ball
+                  10 - Cherish Ball
+                  11 - Fast Ball
+                  12 - Level Ball
+                  13 - Lure Ball
+                  14 - Heavy Ball
+                  15 - Love Ball
+                  16 - Friend Ball
+                  17 - Moon Ball
+                  18 - Comp Ball
+                  19 - Dream Ball
+84            bit 0-6 - met at level
+              bit 7 - OT isfemale
+85            encounter type
+                  00 when caught in BW
+                  preserved if poketransfered
+                      0x00	 Pal Park, Egg, Hatched, Special Event
+                      0x02	 Tall Grass
+                      0x04	 Dialga/Palkia In-Game Event
+                      0x05	 Cave, Hall of Origin
+                      0x07	 Surfing, Fishing
+                      0x09	 Building
+                      0x0A	 Great Marsh (Safari Zone)
+                      0x0C	 Starter, Fossil, Gift (Eevee)
+86            hgss poke ball (always 00 in bw)
+87            unused (always 00)
+== Battle Stats ==
+88            Status condition (bits)
+              0-2 - number of rounds asleep
+              3 - poisoned
+              4 - burned
+              5 - frozen
+              6 - paralyzed
+              7 - badly poisoned
+89            unknown flags, max F0
+8A-8B         unknown
+8C            level
+8d            ball capsule index (00 in BW)
+8e-8f         current hp
+90-91         max hp
+92-93         atk
+94-95         def
+96-97         speed
+98-99         sp atk
+9a-9b         sp def
+9c-d3         unknown - trash data?
+d4-db         unknown - all 0s?
